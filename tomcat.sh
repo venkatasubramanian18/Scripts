@@ -17,3 +17,5 @@ echo "</tomcat-users>"  >> /var/lib/tomcat8/conf/tomcat-users.xml
 #bash to restart tomcat
 #----------------------
 sudo systemctl restart tomcat8
+sleep 5
+sudo systemctl status tomcat8
