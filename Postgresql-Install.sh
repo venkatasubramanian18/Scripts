@@ -109,7 +109,7 @@ sleep 5
 
 # The initial-table.sql script is downloaded and ran to create the user, database, and populate the database.
 echo "Downloading SQL script"
-wget -P $scripts https://raw.githubusercontent.com/devopsbc01/Scripts/master/initial-table.sh
+wget -P $scripts https://raw.githubusercontent.com/devopsbc01/Scripts/master/initial-table.sql
 
 echo "Running script"
 $rfolder/bin/psql -U postgres -f $sqlscript
