@@ -1,3 +1,4 @@
+ALTER USER postgres WITH PASSWORD 'password';
 CREATE SEQUENCE public.ticket_sequence INCREMENT 1 START 1000;
 CREATE TABLE public.avt(tnum bigint default nextval('ticket_sequence'::regclass));
 \dt
