@@ -21,7 +21,6 @@ logfile='psqlinstall-log'
 
 # Ensures the server is up to date before proceeding.
 echo "Updating server..."
-Sudo su -
 sudo apt-get update -y >> $logfile
 
 # This for-loop will pull all packages from the package array and install them using apt-get
