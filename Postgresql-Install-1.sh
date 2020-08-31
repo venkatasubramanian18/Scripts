@@ -59,4 +59,6 @@ echo "Downloading SQL script"
 wget -P $scripts https://raw.githubusercontent.com/devopsbc01/Scripts/master/initial-table.sql
 
 echo "Running script"
-$rfolder/bin/psql -U postgres -f $sqlscript
+#$rfolder/bin/psql -U postgres -f $sqlscript
+
+sudo -u postgres psql -f $sqlscript
