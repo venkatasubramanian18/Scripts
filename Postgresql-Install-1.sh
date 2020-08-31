@@ -62,3 +62,6 @@ echo "Running script"
 #$rfolder/bin/psql -U postgres -f $sqlscript
 
 sudo -u postgres psql -f $sqlscript
+
+echo "Restarting postgres DB"
+sudo /etc/init.d/postgresql restart
