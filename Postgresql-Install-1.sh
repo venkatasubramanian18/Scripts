@@ -1,29 +1,13 @@
 #!/bin/bash -ex
 
-# This script is for use with the DevOps Challenge of installing PostgreSQL 9.6 on to a provisioned AWS EC2 instance running Ubuntu.
-
-# This script will perform the following steps:
-# 1. Set variables such as $packages, $rfolder, $dfolder, $gitloc, $sysuser, $logfile, and $sqlscript
-# 2. Install packages based off of $packages.
-# 3. Create directory: /postgres and other required.
-# 4. Create system user 'postgres'.
-# 5. Pull PostgreSQL from Git depot and confirm it is correct: git clone git://git.postgresql.org/git/postgresql.git.
-# 6. Install PostgreSQL. ensuring the data files are stored in $dataFolder.
-# 7. Start the PostgreSQL service using the pg_ctl command.
-# 8. Run create_hello.sql script.
-# 9. Run '/postgres/bin/psql -c 'select * from hello;' -U user hello_postgres;' against newly created DB and test for succesful response.
+# This script is for use with the DevOps Challenge of installing PostgreSQL 9.6 on to a   instance running Ubuntu.
 
 # Section 1 - Variable Creation
 
-echo "Creating variables for use throughout the PSQL installation process"
-# $packages is an array containing the dependencies for PostgreSQL
-packages=('git' 'gcc' 'tar' 'gzip' 'libreadline5' 'make' 'zlib1g' 'zlib1g-dev' 'flex' 'bison' 'perl' 'python3' 'tcl' 'gettext' 'odbc-postgresql' 'libreadline6-dev')
 # $rfolder is the install directory for PostgreSQL
 rfolder='/postgres'
 # $dfolder is the root directory for various types of read-only data files
 dfolder='/postgres/data'
-# $gitloc is the location of the PosgreSQL git repo
-gitloc='git://git.postgresql.org/git/postgresql.git'
 # $sysuser is the system user for running PostgreSQL
 sysuser='postgres'
 # $scripts directory
@@ -37,6 +21,7 @@ logfile='psqlinstall-log'
 
 # Ensures the server is up to date before proceeding.
 echo "Updating server..."
+Sudo su -
 sudo apt-get update -y >> $logfile
 
 # This for-loop will pull all packages from the package array and install them using apt-get
@@ -45,7 +30,6 @@ sudo apt-get install ${packages[@]} -y >> $logfile
 
 
 # Section 3 - Create required directories
-
 echo "Creating folders $dfolder..."
 sudo mkdir -p $dfolder >> $logfile
 sudo mkdir -p $scripts >> $logfile
@@ -59,10 +43,10 @@ sudo mkdir -p $scripts >> $logfile
 
 echo "installing PostgreSQL"
 sudo apt-get install postgresql postgresql-contrib >> $logfile
-sudo -u postgres psql
-echo "\password"
-echo "password"
-
+echo "host    all             all             0.0.0.0/0               md5" >> /etc/postgresql/10/main/pg_hba.conf
+sed -i 's+localhost+*+gI' /etc/postgresql/10/main/postgresql.conf
+sed -i 's+#listen_addresses+listen_addresses+gI' /etc/postgresql/10/main/postgresql.conf
+#listen_addresses = 'localhost'
 # Section 7 - Start PSQL
 
 echo "Wait for PostgreSQL to finish starting up..."
