@@ -1,13 +1,14 @@
 #bash to install tomcat
+# $logfile is the log file for this installation.
+logfile='tomcatlinstall-log'
 #----------------------
-sudo su -
 echo "Updating server..."
-sudo apt-get update
+sudo apt-get update >> $logfile
 echo "Updating Java..."
-sudo apt-get install default-jdk 
+sudo apt-get install default-jdk >> $logfile
 echo "Installing tomcat8..."
-sudo apt-get install tomcat8
-sudo apt-get install tomcat8-docs tomcat8-examples tomcat8-admin
+sudo apt-get install tomcat8 >> $logfile
+sudo apt-get install tomcat8-docs tomcat8-examples tomcat8-admin >> $logfile
 #bash to admin-user in tomcat
 #----------------------------
 sed -i 's+</tomcat-users>+  <role rolename="admin-script"/>+gI' /var/lib/tomcat8/conf/tomcat-users.xml
@@ -21,7 +22,7 @@ echo "</tomcat-users>"  >> /var/lib/tomcat8/conf/tomcat-users.xml
 #bash to restart tomcat
 #----------------------
 echo "Restart tomcat8..."
-sudo systemctl restart tomcat8
+sudo systemctl restart tomcat8 >> $logfile
 sleep 5
 echo "Tomcat8 Status..."
 sudo systemctl status tomcat8
