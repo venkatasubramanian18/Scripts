@@ -1,0 +1,12 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('git') {
+            steps {
+                // Get some code from a GitHub repository
+                git credentialsId: 'GIT', url: 'https://github.com/venkatasubramanian18/DevOps-Demo-WebApp.git'
+            }
+            }
+        }
+    }
